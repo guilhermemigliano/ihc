@@ -1,0 +1,113 @@
+<!doctype HTML>
+<html>
+<script src="https://aframe.io/releases/0.9.2/aframe.min.js"></script>
+<script src="https://raw.githack.com/jeromeetienne/AR.js/2.0.5/aframe/build/aframe-ar.js"></script>
+
+  <body style='margin : 0px; overflow: hidden;'>
+     
+
+    <a-scene id="cena" embedded arjs background="color: white">
+        
+      <a-entity id="p1" scale="1.5 1.5 1.5" position="-90 10 -15" rotation="270 -180 80" gltf-model="peca/peca.gltf"></a-entity>
+     
+        
+        
+      <a-marker id="furadeira" preset="pattern" type="pattern" url="drill.patt">
+          <a-entity id="p2" scale="10 10 10" position="3 1 0" rotation="0 90 270" gltf-model="drill.gltf"></a-entity>
+      </a-marker>
+
+      <a-marker id="ring" preset="pattern" type="pattern" url="ring.patt">
+          <a-entity id="p" scale="0.03 0.05 0.01" position="3 1 0" rotation="0 90 90" gltf-model="ring/ring.gltf"></a-entity>
+      </a-marker>
+      
+      <a-entity id="camera" position="10 0 -7" rotation="0 90 0"><a-camera user-height="0.2"></a-camera></a-entity>
+    </a-scene>
+   
+
+    <script>
+
+      
+      var marker1 = document.getElementById("furadeira");    
+      var marker2 = document.getElementById("ring");  
+
+      marker1.addEventListener('markerFound', function(event){
+
+
+               var teste = document.getElementById("cena");
+
+               var novoEl = document.createElement('a-entity');
+               novoEl.setAttribute("scale", "10 10 10");
+               novoEl.setAttribute("position", "-10 1 -10");
+               novoEl.setAttribute("rotation", "0 90 0");
+               novoEl.setAttribute("gltf-model", "drill.gltf");
+               novoEl.setAttribute("id", "f1");
+
+
+               document.getElementById("cena").appendChild(novoEl);
+
+               document.getElementById("furadeira").remove();
+
+             
+        
+      });
+
+      marker2.addEventListener('markerFound', function(event){
+
+
+        var teste = document.getElementById("cena");
+
+        var novoEl = document.createElement('a-entity');
+        novoEl.setAttribute("id", "d1");
+        novoEl.setAttribute("scale", "0.03 0.05 0.01");
+        novoEl.setAttribute("position", "-90 6.5 -10");
+        novoEl.setAttribute("rotation", "0 90 90");
+        novoEl.setAttribute("gltf-model", "ring/ring.gltf");
+
+
+        teste.appendChild(novoEl);
+
+        document.getElementById("ring").remove();
+
+        setTimeout(function(){ 
+          novoEl.setAttribute("animation", "property: position; to: -90 6.5 -16; loop: false; dur: 1000");
+         }, 3000);
+
+         setTimeout(function(){ 
+          var furadeira = document.getElementById("f1");
+           f1.setAttribute("animation", "property: position; to: -10 1 -8; loop: false; dur: 1000");
+          novoEl.setAttribute("animation", "property: position; to: -90 6.5 -6; loop: false; dur: 1000");
+         }, 6000);
+
+        setTimeout(function(){
+          var novaImg = document.createElement('a-image');
+          novaImg.setAttribute("id", "img");
+          novaImg.setAttribute("src", "img/certo.png");
+          novaImg.setAttribute("position", "1 2 -5");
+          novaImg.setAttribute("rotation", "0 90 0");
+          novaImg.setAttribute("width", "2");
+          novaImg.setAttribute("height", "1");
+
+          teste.appendChild(novaImg);
+
+        }, 8000);
+          
+
+        
+
+         
+
+
+      });
+
+  
+      
+
+      // <a-entity id="p3" scale="0.03 0.05 0.01" position="-90 6.5 -10" rotation="0 90 90" gltf-model="ring/ring.gltf"></a-entity>
+
+      
+      
+    </script>
+
+    
+  </body>
+</html>
